@@ -8,7 +8,6 @@
   border-radius: var(--radius-16);
   background: var(--color-blurred-popover);
   backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   box-shadow: var(--shadow-popover);
 }
 
