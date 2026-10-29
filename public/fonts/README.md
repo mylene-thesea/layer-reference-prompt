@@ -1,6 +1,6 @@
-Place the Saans font files here:
+Saans web font files, referenced from `src/index.css`:
 
-- Saans-Regular.woff2  (weight 400)
-- Saans-SemiBold.woff2 (weight 600)
+- Saans-Regular.otf  (weight 400)
+- Saans-SemiBold.otf (weight 600)
 
-They are referenced from `src/index.css`. Until they're added, the UI falls back to the system sans-serif.
+An installed copy of Saans is used first when available.

@@ -1,13 +1,13 @@
 /*
  * Saans: an installed copy is used first (local()), then the web font files in
- * /public/fonts. For deployed builds, add Saans-Regular.woff2 and Saans-SemiBold.woff2 there.
+ * /public/fonts. Those files are what deployed builds use.
  */
 @font-face {
   font-family: 'Saans';
   src:
     local('Saans Regular'),
     local('Saans-Regular'),
-    url('/fonts/Saans-Regular.woff2') format('woff2');
+    url('/fonts/Saans-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -18,7 +18,7 @@
   src:
     local('Saans SemiBold'),
     local('Saans-SemiBold'),
-    url('/fonts/Saans-SemiBold.woff2') format('woff2');
+    url('/fonts/Saans-SemiBold.otf') format('opentype');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
