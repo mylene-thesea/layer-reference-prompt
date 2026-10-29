@@ -1,0 +1,293 @@
+.gen-settings {
+  display: flex;
+  flex-direction: column;
+  width: 320px;
+  max-height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--color-bg-elevated);
+  border-radius: var(--radius-16);
+  background: var(--color-blurred-popover);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-popover);
+}
+
+.gen-settings__scroll {
+  overflow-x: clip;
+  overflow-y: auto;
+}
+
+.gen-settings__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--padding-sm) var(--padding) 0;
+}
+
+.gen-settings__title {
+  margin: 0;
+  font-weight: 400;
+  color: var(--color-text-tertiary);
+}
+
+.gen-settings__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding);
+  padding: var(--padding);
+}
+
+.gen-settings__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-xxs);
+}
+
+.gen-settings__group--prompt {
+  gap: var(--padding-xs);
+}
+
+.gen-settings__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gen-settings__label {
+  display: flex;
+  align-items: center;
+  gap: var(--padding-xxs);
+}
+
+/* Buttons ----------------------------------------------------------------- */
+
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-lg);
+  transition: background-color 120ms ease;
+}
+
+.icon-button:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.icon-button--muted {
+  opacity: 0.5;
+}
+
+.secondary-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--padding-xs);
+  height: 32px;
+  padding: 0 var(--padding-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-container);
+  box-shadow: var(--shadow-button);
+  white-space: nowrap;
+}
+
+/* Prompt ------------------------------------------------------------------ */
+
+.prompt-box {
+  position: relative;
+  height: 140px;
+  padding: var(--padding-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-container);
+  transition: border-color 120ms ease;
+}
+
+.prompt-box:focus-within {
+  border-color: var(--color-bg-spotlight);
+}
+
+/* Stops above the Library button, which floats over the box. */
+.prompt-box__editor {
+  height: 80px;
+}
+
+.prompt-box__library {
+  position: absolute;
+  left: var(--padding-xs);
+  bottom: var(--padding-xs);
+}
+
+/* Reference images -------------------------------------------------------- */
+
+.reference-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--padding-xs) var(--padding-sm);
+}
+
+.reference-chip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--padding-xs);
+  height: 40px;
+  padding: 0 var(--padding-sm) 0 var(--padding-xxs);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-container);
+}
+
+.reference-chip__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.badge-count {
+  position: absolute;
+  top: 50%;
+  right: -9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  transform: translateY(-50%);
+  border-radius: var(--radius-16);
+  background: var(--color-bg-spotlight);
+  letter-spacing: -0.12px;
+}
+
+/* Aspect ratio ------------------------------------------------------------ */
+
+.size-selector {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--color-split);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-container);
+}
+
+.size-selector__item {
+  height: 20px;
+  min-width: 32px;
+  padding: 0 var(--padding-xxs);
+  border-radius: 6px;
+  letter-spacing: -0.12px;
+  color: var(--color-text-tertiary);
+}
+
+.size-selector__item.is-selected {
+  min-width: 0;
+  background: var(--color-bg-spotlight);
+  color: var(--color-text-light);
+}
+
+.select {
+  display: flex;
+  align-items: center;
+  gap: var(--padding-sm);
+  width: 100%;
+  height: 40px;
+  padding: 0 var(--padding-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-container);
+  text-align: left;
+}
+
+.select__value,
+.select__meta {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.select__meta {
+  text-align: right;
+  letter-spacing: -0.12px;
+  color: var(--color-text-secondary);
+}
+
+/* Image count ------------------------------------------------------------- */
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--padding-xs);
+}
+
+.stepper__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-32);
+  background: var(--color-bg-container);
+}
+
+.stepper__button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.stepper__value {
+  width: 14px;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+}
+
+/* Generate ---------------------------------------------------------------- */
+
+.gen-settings__footer {
+  padding: var(--padding) var(--padding-lg) var(--padding-lg);
+}
+
+.generate-button {
+  display: flex;
+  height: 40px;
+  overflow: hidden;
+  border-radius: 100px;
+  background: var(--color-primary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.generate-button button:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.generate-button__main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--padding-xxs);
+  padding: 0 var(--padding);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: -0.16px;
+}
+
+.generate-button__more {
+  display: flex;
+  align-items: center;
+  gap: var(--padding-xs);
+  padding-right: var(--padding-sm);
+}
+
+.generate-button__divider {
+  align-self: stretch;
+  width: 1px;
+  background: var(--color-bg-light);
+  opacity: 0.2;
+}

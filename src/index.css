@@ -1,0 +1,112 @@
+/*
+ * Saans is loaded from /public/fonts. Drop the font files there with these names:
+ *   Saans-Regular.woff2, Saans-SemiBold.woff2
+ */
+@font-face {
+  font-family: 'Saans';
+  src: url('/fonts/Saans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Saans';
+  src: url('/fonts/Saans-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Design tokens (names mirror the Figma variables) */
+:root {
+  --font-family: 'Saans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+
+  --color-bg-layout: #141418;
+  --color-bg-container: #26262c;
+  --color-bg-elevated: #2f2f37;
+  --color-bg-spotlight: #50505d;
+  --color-bg-light: #ffffff;
+  --color-blurred-popover: rgba(38, 38, 44, 0.88);
+
+  --color-border: #40404a;
+  --color-split: #40404a;
+
+  --color-text-light: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.65);
+  --color-text-tertiary: rgba(255, 255, 255, 0.45);
+  --color-text-placeholder: rgba(255, 255, 255, 0.25);
+
+  --color-primary: #4570ff;
+  --color-border-light: #ffffff;
+  --color-mention-bg: rgba(255, 255, 255, 0.1);
+  --color-mention-bg-active: rgba(255, 255, 255, 0.2);
+  --color-item-active: rgba(255, 255, 255, 0.08);
+
+  --padding-xxs: 4px;
+  --padding-xs: 8px;
+  --padding-sm: 12px;
+  --padding: 16px;
+  --padding-lg: 24px;
+
+  --radius-sm: 4px;
+  --radius-lg: 8px;
+  --radius-16: 16px;
+  --radius-32: 32px;
+
+  --shadow-popover: 0 4px 32px 4px rgba(0, 0, 0, 0.24);
+  --shadow-dropdown: 0 4px 32px 0 rgba(0, 0, 0, 0.24);
+  --shadow-button: 0 1px 1px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02), 0 2px 2px rgba(0, 0, 0, 0.02);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--color-bg-layout);
+  color: var(--color-text-light);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+img {
+  display: block;
+}
+
+/* Typography styles from Figma */
+.text-normal {
+  font-size: 14px;
+  line-height: 1.4;
+  letter-spacing: -0.14px;
+}
+
+.text-caption {
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.text-caption-upper {
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: -0.12px;
+  text-transform: uppercase;
+}

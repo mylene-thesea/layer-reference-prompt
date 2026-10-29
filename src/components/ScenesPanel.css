@@ -1,0 +1,88 @@
+.scenes {
+  padding-bottom: var(--padding-lg);
+  border-bottom: 1px solid var(--color-bg-elevated);
+}
+
+.scenes__intro {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--padding-lg) var(--padding-lg) var(--padding-xs);
+}
+
+.scenes__title {
+  margin: 0;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+.scenes__actions,
+.scene__actions {
+  display: flex;
+  align-items: center;
+}
+
+.round-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-32);
+}
+
+.scenes__list,
+.scene__layers {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.scenes__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-xxs);
+  padding: 0 var(--padding);
+}
+
+.scene {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-xs);
+  padding: var(--padding-xs);
+  border-radius: var(--radius-16);
+}
+
+.scene.is-active {
+  background: var(--color-bg-container);
+}
+
+.scene__line {
+  display: flex;
+  align-items: center;
+  gap: var(--padding-sm);
+}
+
+.scene__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.scene__meta {
+  color: var(--color-text-tertiary);
+}
+
+.scene__layers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-xs);
+  padding: 0 var(--padding-xs) 0 52px;
+}
+
+.scene__layer {
+  display: flex;
+  align-items: center;
+  gap: var(--padding-sm);
+}
