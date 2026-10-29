@@ -92,7 +92,7 @@ export function MentionDropdown({
             onMouseMove={() => onHover(item.id)}
           >
             <Thumbnail source={item.thumbnail} size={24} radius={8} backdrop />
-            <span className="mention-dropdown__label text-caption">{item.name}</span>
+            <span className="mention-dropdown__label text-normal">{item.name}</span>
           </div>
         ))}
       </div>
