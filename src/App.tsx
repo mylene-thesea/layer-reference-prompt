@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { GenerationSettings } from './components/GenerationSettings'
 import { SceneCanvas } from './components/SceneCanvas'
 import { ScenesPanel } from './components/ScenesPanel'
@@ -6,6 +7,8 @@ import './App.css'
 
 export default function App() {
   const activeScene = scenes[0]
+  // Layers referenced from the prompt that the canvas outlines.
+  const [highlightedLayerIds, setHighlightedLayerIds] = useState<string[]>([])
 
   return (
     <div className="app">
@@ -21,9 +24,13 @@ export default function App() {
         </aside>
 
         <main className="app__canvas">
-          <SceneCanvas name={activeScene.name} />
+          <SceneCanvas name={activeScene.name} highlightedLayerIds={highlightedLayerIds} />
           <div className="app__panel">
-            <GenerationSettings layers={sceneLayers} references={referenceImages} />
+            <GenerationSettings
+              layers={sceneLayers}
+              references={referenceImages}
+              onHighlightLayers={setHighlightedLayerIds}
+            />
           </div>
         </main>
       </div>

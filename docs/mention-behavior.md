@@ -200,7 +200,57 @@ Serialized string (logged on **Generate** in the prototype):
 
 ---
 
-## 13. Open questions / not covered yet
+## 13. Highlighting referenced layers in the scene
+
+### Purpose
+
+This helps the user see **which element of the scene a mention refers to**. It matters most when several layers look alike, where the name alone may not be enough. It's a one-way visual aid, from the prompt to the scene only.
+
+### What triggers the highlight
+
+A layer is highlighted while any of these is true:
+
+1. **Dropdown:** the layer's row is highlighted in the `@` mention dropdown, by mouse hover or by arrow keys. The first row is highlighted by default when the dropdown opens, so its layer is outlined right away.
+2. **Pill hover:** the mouse is over that layer's pill in the prompt.
+3. **Pill selected:** that layer's pill is selected, by clicking it, by moving onto it with the arrow keys, or because it's inside a text selection (e.g. Cmd+A).
+
+Several layers can be highlighted at once. For example, selecting all the prompt text highlights every layer mentioned in it. Each layer is highlighted once, even if it's mentioned several times.
+
+### What doesn't trigger it
+
+- **Reference images:** they aren't part of the scene, so hovering or selecting them does nothing on the canvas.
+- **Plain prompt text:** typing, or moving the cursor through text, doesn't highlight anything.
+
+### When the highlight goes away
+
+- The dropdown closes (Esc, inserting an item, clicking outside, or a query with no match).
+- The mouse leaves the pill.
+- The selection no longer includes the pill (e.g. the cursor moves away).
+- The prompt loses focus.
+- The pill is deleted.
+
+### Appearance
+
+- **Shape:** a rectangle around the layer's visible content, not its exact outline.
+- **Style:** 2px stroke in the primary colour (`#4570ff`), with a quick fade-in.
+- **On top of everything:** the rectangle is drawn above all layers, so a layer partly hidden behind another still shows its full extent.
+- **Within the frame:** if a layer extends past the frame, its rectangle is cut at the frame edge so it stays fully visible.
+- **Full-frame layers:** a layer that fills the whole scene, like Background, is outlined along the frame's edge.
+
+### Example
+
+The prompt reads "**[Fresh lime slice]** should be more yellow". Hovering the pill draws a blue rectangle around the lime wedge in the scene, including the part hidden behind the jar. Moving the mouse away removes it.
+
+### Out of scope
+
+- **Sidebar:** no highlight on the layer's row in the left sidebar.
+- **Reverse direction:** hovering a layer on the canvas or in the sidebar doesn't highlight its pills in the prompt.
+- **Hidden or locked layers:** no special treatment.
+- **Off-screen layers:** the canvas doesn't scroll or zoom to bring a highlighted layer into view.
+
+---
+
+## 14. Open questions / not covered yet
 
 1. **Renamed or deleted layers / references:** should existing tags update their name, show a “missing” state, or be removed?
 2. **Reference image added or removed:** badge numbers shift. Should `@n` shortcuts and existing tags follow the image, not the number? (Tags already store the ID, so they follow the image.)
@@ -212,3 +262,4 @@ Serialized string (logged on **Generate** in the prototype):
 8. **Text selection colour:** use the browser default or a design-system colour?
 9. **Limits:** is there a maximum number of mentions per prompt, or a maximum prompt length?
 10. **Touch / mobile behavior** hasn't been considered.
+11. **Several highlighted layers:** should all highlighted layers look the same (current behaviour), or should the one being hovered stand out from the others that are selected?

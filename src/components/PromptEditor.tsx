@@ -14,6 +14,8 @@ type PromptEditorProps = {
   references: Mentionable[]
   placeholder?: string
   onChange?: (segments: PromptSegment[]) => void
+  /** Layers being pointed at: hovered or selected tags, or the highlighted dropdown row. */
+  onHighlightLayers?: (layerIds: string[]) => void
 }
 
 type MentionQuery = {
@@ -170,22 +172,42 @@ const placeCaretBeside = (tag: HTMLElement, side: 'before' | 'after') =>
  * Mirrors the DOM selection onto the tags so selected pills can be styled: a single
  * pill picked with the arrows/click, or every pill inside a wider text selection.
  */
-function syncSelectedTag(editor: HTMLElement) {
+function syncSelectedTag(editor: HTMLElement): HTMLElement[] {
   const selection = window.getSelection()
   const range =
     document.activeElement === editor && selection && selection.rangeCount > 0 && !selection.isCollapsed
       ? selection.getRangeAt(0)
       : null
+  const selected: HTMLElement[] = []
   editor.querySelectorAll<HTMLElement>('.mention').forEach((tag) => {
-    tag.classList.toggle('is-selected', range?.intersectsNode(tag) ?? false)
+    const isSelected = range?.intersectsNode(tag) ?? false
+    tag.classList.toggle('is-selected', isSelected)
+    if (isSelected) selected.push(tag)
   })
+  return selected
 }
 
-export function PromptEditor({ layers, references, placeholder, onChange }: PromptEditorProps) {
+/** Layer ids of the given tags, skipping reference images. */
+const layerIdsOf = (tags: (HTMLElement | null)[]) =>
+  tags.flatMap((tag) =>
+    tag?.isConnected && tag.dataset.mentionKind === 'layer' ? [tag.dataset.mentionId!] : [],
+  )
+
+const sameIds = (a: string[], b: string[]) => a.length === b.length && a.every((id, i) => id === b[i])
+
+export function PromptEditor({
+  layers,
+  references,
+  placeholder,
+  onChange,
+  onHighlightLayers,
+}: PromptEditorProps) {
   const editorRef = useRef<HTMLDivElement>(null)
   const [isEmpty, setIsEmpty] = useState(true)
   const [mention, setMention] = useState<MentionQuery | null>(null)
   const [highlightedId, setHighlightedId] = useState<string | null>(null)
+  const [hoveredTag, setHoveredTag] = useState<HTMLElement | null>(null)
+  const [selectedLayerIds, setSelectedLayerIds] = useState<string[]>([])
   /** The "@" the user dismissed with Escape, so it doesn't immediately reopen. */
   const dismissedRef = useRef<{ node: Text; start: number } | null>(null)
 
@@ -200,6 +222,25 @@ export function PromptEditor({ layers, references, placeholder, onChange }: Prom
   const activeId = resolveActive(filtered.all)?.id ?? null
   // With a query and no matches, close the list so "@" can be typed as plain text.
   const isOpen = mention !== null && (filtered.all.length > 0 || hasNothingToMention)
+
+  const updateSelectedTags = useCallback((editor: HTMLElement) => {
+    const ids = layerIdsOf(syncSelectedTag(editor))
+    setSelectedLayerIds((prev) => (sameIds(prev, ids) ? prev : ids))
+  }, [])
+
+  // Tell the canvas which layers to outline.
+  const activeOption = isOpen ? filtered.all.find((o) => o.id === activeId) : undefined
+  const pointedLayerIds = [
+    ...new Set([
+      ...(activeOption?.kind === 'layer' ? [activeOption.id] : []),
+      ...layerIdsOf([hoveredTag]),
+      ...selectedLayerIds,
+    ]),
+  ]
+  const pointedKey = pointedLayerIds.join('|')
+  useEffect(() => {
+    onHighlightLayers?.(pointedKey ? pointedKey.split('|') : [])
+  }, [pointedKey, onHighlightLayers])
 
   /** Current "@query" at the caret, ignoring one the user dismissed with Escape. */
   const readActiveMention = useCallback((): MentionQuery | null => {
@@ -233,11 +274,11 @@ export function PromptEditor({ layers, references, placeholder, onChange }: Prom
   useEffect(() => {
     const onSelectionChange = () => {
       syncMention()
-      if (editorRef.current) syncSelectedTag(editorRef.current)
+      if (editorRef.current) updateSelectedTags(editorRef.current)
     }
     document.addEventListener('selectionchange', onSelectionChange)
     return () => document.removeEventListener('selectionchange', onSelectionChange)
-  }, [syncMention])
+  }, [syncMention, updateSelectedTags])
 
   // Re-anchor the dropdown when the page or the editor scrolls.
   useEffect(() => {
@@ -258,6 +299,8 @@ export function PromptEditor({ layers, references, placeholder, onChange }: Prom
     if (!editor) return
     const segments = serialize(editor)
     setIsEmpty(segments.length === 0)
+    // A hovered tag can be deleted from the keyboard without a mouse event.
+    setHoveredTag((tag) => (tag?.isConnected ? tag : null))
     onChange?.(segments)
   }, [onChange])
 
@@ -410,10 +453,12 @@ export function PromptEditor({ layers, references, placeholder, onChange }: Prom
           onInput={emitChange}
           onKeyDown={handleKeyDown}
           onMouseDown={handleMouseDown}
+          onMouseOver={(e) => setHoveredTag((e.target as HTMLElement).closest<HTMLElement>('.mention'))}
+          onMouseLeave={() => setHoveredTag(null)}
           onPaste={handlePaste}
           onBlur={(e) => {
             setMention(null)
-            syncSelectedTag(e.currentTarget)
+            updateSelectedTags(e.currentTarget)
           }}
           onDrop={(e) => e.preventDefault()}
         />

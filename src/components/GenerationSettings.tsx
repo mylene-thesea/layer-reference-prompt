@@ -16,6 +16,7 @@ import './GenerationSettings.css'
 type GenerationSettingsProps = {
   layers: Mentionable[]
   references: Mentionable[]
+  onHighlightLayers?: (layerIds: string[]) => void
 }
 
 const RESOLUTIONS = { '1K': 1024, '2K': 2048 } as const
@@ -31,7 +32,7 @@ function toPromptString(segments: PromptSegment[]) {
     .join('')
 }
 
-export function GenerationSettings({ layers, references }: GenerationSettingsProps) {
+export function GenerationSettings({ layers, references, onHighlightLayers }: GenerationSettingsProps) {
   const [segments, setSegments] = useState<PromptSegment[]>([])
   const [resolution, setResolution] = useState<Resolution>('2K')
   const [count, setCount] = useState(4)
@@ -66,6 +67,7 @@ export function GenerationSettings({ layers, references }: GenerationSettingsPro
                   references={references}
                   placeholder="Describe what you imagine, use @ to refer to layers or references."
                   onChange={setSegments}
+                  onHighlightLayers={onHighlightLayers}
                 />
               </div>
               <button className="secondary-button prompt-box__library">

@@ -33,7 +33,15 @@
   width: 720px;
   height: 720px;
   overflow: hidden;
+}
+
+/* Figma's inside stroke: drawn over the layers so they keep the full 720px. */
+.scene-canvas__artboard::after {
+  content: '';
+  position: absolute;
+  inset: 0;
   border: 1px solid #fff;
+  pointer-events: none;
 }
 
 .scene-canvas__layer {
@@ -41,12 +49,6 @@
   max-width: none;
   object-fit: cover;
   pointer-events: none;
-}
-
-.scene-canvas__layer--fill {
-  inset: 0;
-  width: 100%;
-  height: 100%;
 }
 
 .scene-canvas__brush {
@@ -77,4 +79,20 @@
   width: calc(100% + 40.08%);
   height: calc(100% + 31.47%);
   max-width: none;
+}
+
+/* Layer outline -------------------------------------------------------------- */
+
+.scene-canvas__outline {
+  position: absolute;
+  z-index: 1; /* above the artboard's white frame */
+  border: 2px solid var(--color-primary);
+  pointer-events: none;
+  animation: layer-outline-in 120ms ease-out;
+}
+
+@keyframes layer-outline-in {
+  from {
+    opacity: 0;
+  }
 }
